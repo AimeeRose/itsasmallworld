@@ -28,3 +28,41 @@
   content: "";
   padding: 0;
 }
+
+body {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 300;
+  background-color: #222;
+  color: white
+}
+
+a { 
+  color: #FFFACD;
+}
+#body {
+  position: relative;
+}
+
+svg {
+  width: 1280px;
+  height: 800px;
+  pointer-events: all;
+}
+
+.airport {
+  fill: #FFFACD;
+  stroke: none;
+}
+
+path {
+  fill: #aaa;
+  stroke: #fff;
+}
+
+.route-tip {
+  color: #FFFACD;
+}
+
+.route-tip:hover {
+  background-color: yellow;
+}

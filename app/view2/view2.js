@@ -9,6 +9,6 @@ angular.module('myApp.view2', ['ngRoute'])
   });
 }])
 
-.controller('View2Ctrl', [function() {
-
+.controller('View2Ctrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+  d3.selectAll('g#cities path').remove()
 }]);

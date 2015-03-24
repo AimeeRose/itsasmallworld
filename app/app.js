@@ -3,12 +3,12 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
   'ngRoute',
-  'myApp.view1',
+  'myApp.airTravel',
   'myApp.view2',
   'myApp.version'
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/view1'});
+  $routeProvider.otherwise({redirectTo: '/airTravel'});
 }]).
 directive('myCurrentTime', ['$interval', 'dateFilter', function($interval, dateFilter) {
   function link(scope, element, attrs) {
@@ -48,8 +48,12 @@ directive('azimuthalMap', ['$rootScope', function($rootScope) {
       .mode("orthographic")
       .translate([640, 400]);
 
+  $rootScope.projection = projection;
+
   var circle = d3.geo.greatCircle()
       .origin(projection.origin());
+
+  $rootScope.circle = circle;
 
   var scale = {
     orthographic: 380,
@@ -93,7 +97,7 @@ directive('azimuthalMap', ['$rootScope', function($rootScope) {
       d3.json("data/world-countries.json", function(collection) {
         feature = geoGroup.selectAll("path").data(collection.features).enter().append("svg:path")
           .attr("d", clip)
-          .on("click", clicked);
+          .on("click", zoom);
 
         feature.append("svg:title")
             .text(function(d) { return d.properties.name; });
@@ -127,17 +131,19 @@ directive('azimuthalMap', ['$rootScope', function($rootScope) {
       }
 
       function refresh(duration) {
-        (duration ? feature.transition().duration(duration) : feature).attr("d", clip);
+        duration ? d3.selectAll('path').transition().duration(duration).attr("d", clip) : d3.selectAll('path').attr("d", clip)
       }
 
       function clip(d) {
-        return path(circle.clip(d));
+        return $rootScope.path($rootScope.circle.clip(d));
       }
 
       $rootScope.clip = clip;
 
       // This should get re-written when data enters the picture
-      function clicked(d) {
+      function zoom(d) {
+        console.log($rootScope.routesGroup)
+        $rootScope.routesGroup.selectAll('path').remove()
         var x, y, k;
 
         if (d && centered !== d) {

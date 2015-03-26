@@ -1,6 +1,7 @@
 function azimuthalMap(rootScope) {
-  var width = 1024,
-    height = 640,
+  var scale_q = 380,
+    width = scale_q * 2,
+    height = scale_q * 2,
     centered,
     cityAirportData,
     feature;
@@ -8,10 +9,9 @@ function azimuthalMap(rootScope) {
   rootScope.height = height
 
   var projection = d3.geo.azimuthal()
-      .scale(380)
+      .scale(scale_q)
       .origin([-71.03,42.37])
-      .mode("orthographic")
-      .translate([640, 400]);
+      .mode("orthographic");
   rootScope.projection = projection
 
   var circle = d3.geo.greatCircle()
@@ -19,11 +19,11 @@ function azimuthalMap(rootScope) {
   rootScope.circle = circle
 
   var scale = {
-    orthographic: 380,
-    stereographic: 380,
-    gnomonic: 380,
-    equidistant: 380 / Math.PI * 2,
-    equalarea: 380 / Math.SQRT2
+    orthographic: scale_q,
+    stereographic: scale_q,
+    gnomonic: scale_q,
+    equidistant: scale_q / Math.PI * 2,
+    equalarea: scale_q / Math.SQRT2
   };
   rootScope.scale = scale
 

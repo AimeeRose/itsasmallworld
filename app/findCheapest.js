@@ -4,7 +4,7 @@ function findCheapest(origin, destination) {
     exchangeRates = data
   })
 
-  var googleApiUrl = 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyApKrIAV2s6c3feZebz9j66PEy16R2j_mY'
+  var googleApiUrl = 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyApKrIAV2s6c3feZebz9j66PEy16R2j_mY&userIp=8.25.146.11'
 
   todaysDate = new Date().toISOString().substring(0,10)
   $.ajax({
@@ -70,7 +70,8 @@ function findCheapest(origin, destination) {
     } else {
       fare = currency + ' ' + amount;
     }
-    //$('.fare').html(fare)
-    console.log(fare)
+    originCityName = _.find(cityAirportData, function(c) { return c.airportCode == origin })['city name']
+    destinationCityName = _.find(cityAirportData, function(c) { return c.airportCode == destination })['city name']
+    $('.fare').html(originCityName + " to " + destinationCityName + ": " + fare)
   })
 }

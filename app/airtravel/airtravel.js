@@ -11,5 +11,5 @@ angular.module('myApp.airTravel', ['ngRoute'])
 
 .controller('airTravelCtrl', ['$scope', function($scope) {
   $scope.format = 'M/d/yy h:mm:ss a';
-  $scope.data = 'cities'
+  $scope.data = 'airports'
 }]);

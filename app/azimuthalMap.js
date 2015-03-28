@@ -50,16 +50,19 @@ function azimuthalMap(rootScope) {
   }
   // Groups
   var geoGroup = svg.append("g").attr("id", "geo-paths")
+  rootScope.geoGroup = geoGroup
 
   // Draw the world
   d3.json("data/world-countries.json", function(collection) {
     feature = geoGroup.selectAll("path").data(collection.features).enter().append("svg:path")
       .attr("d", clip)
       // TODO: add me back
-      //.on("click", zoom);
+      .on("click", function(d) { zoom(d, [geoGroup])});
 
     feature.append("svg:title")
         .text(function(d) { return d.properties.name; });
+
+    rootScope.feature = feature
   });
 
   d3.select(window)
@@ -99,7 +102,7 @@ function azimuthalMap(rootScope) {
   rootScope.clip = clip
 
   // This should get re-written when data enters the picture
-  function zoom(d) {
+  function zoom(d, groups) {
     var x, y, k;
 
     if (d && centered !== d) {
@@ -114,12 +117,26 @@ function azimuthalMap(rootScope) {
       k = 1;
       centered = null;
     }
-    var allPaths = d3.selectAll('path')
-    allPaths.classed("active", centered && function(d) { return d === centered; });
 
-    allPaths.transition()
+    geoGroup.selectAll("path")
+        .classed("active", centered && function(d) { return d === centered; });
+
+    //FIXME: DRY ME
+    geoGroup.transition()
         .duration(750)
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
         .style("stroke-width", 1.5 / k + "px");
+    if (rootScope.citiesGroup !== undefined) {
+      rootScope.citiesGroup.transition()
+        .duration(750)
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+        .style("stroke-width", 1.5 / k + "px");
+    }
+    if (rootScope.routesGroup !== undefined) {
+      rootScope.routesGroup.transition()
+          .duration(750)
+          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+    }
   }
+  rootScope.zoom = zoom
 }

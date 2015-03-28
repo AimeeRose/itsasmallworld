@@ -1,6 +1,7 @@
 function mapAirports(scope) {
   // AIRPORTS
   var citiesGroup = scope.svg.append("g").attr("id", "cities")
+  scope.citiesGroup = citiesGroup
 
   // Tooltips for airports
   var tip = d3.tip()
@@ -40,6 +41,7 @@ function mapAirports(scope) {
 
   // ROUTES
   var routesGroup = scope.svg.append("g").attr("id", "routes-group")
+  scope.routesGroup = routesGroup
 
   var routeTip = function(origin, destination) {
     $('span.route-span').empty()
@@ -47,11 +49,12 @@ function mapAirports(scope) {
     if ($('#routes-div').is(":hidden")) { $('#routes-div').show() }
   }
 
-  var activeRoute = function() {
+  var activeRoute = function(d) {
     var routePath = d3.select(this)
     var routeData = routePath[0][0].__data__
     routeTip(routeData.origin, routeData.destination)
     routePath.style({'stroke': 'orange'})
+    $('.fare').html(d.origin + ' - ' + d.destination)
   }
 
   var deactivateRoute = function() {

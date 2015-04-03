@@ -78,6 +78,7 @@
   <script src="findCheapest.js"></script>
   <script src="azimuthalMap.js"></script>
   <script src="mapAirports.js"></script>
+  <script src="chartCities.js"></script>
   <script src="airtravel/airtravel.js"></script>
   <script src="bigCities/bigCities.js"></script>
   <script src="components/version/version.js"></script>
@@ -85,6 +86,11 @@
   <script src="components/version/interpolate-filter.js"></script>
 
   <script>
+    var current_page = window.location.hash
+    var list_element = $('a[href="' + current_page + '"]').parent()
+    $('.active').removeClass('active')
+    list_element.addClass('active')
+
     $('.nav-sidebar a').on('click', function(e) {
       $('.active').removeClass('active')
       $(this).parent().addClass('active')

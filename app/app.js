@@ -24,4 +24,19 @@ directive('azimuthalMap', ['$rootScope', function($rootScope) {
   return {
     link: link
   }
+}]).
+directive('bigCities', ['$rootScope', function($rootScope) {
+  function link(scope, element, attrs) {
+    chartCities($rootScope)
+
+    scope.$watch(attrs.cityData, function(value) {
+      if (value == 'populations') {
+        //mapAirports($rootScope)
+      }
+    });
+  }
+
+  return {
+    link: link
+  }
 }]);

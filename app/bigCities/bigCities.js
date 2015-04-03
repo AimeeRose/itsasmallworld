@@ -5,10 +5,10 @@ angular.module('myApp.bigCities', ['ngRoute'])
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/bigCities', {
     templateUrl: 'bigCities/bigCities.html',
-    controller: 'View2Ctrl'
+    controller: 'BigCitiesCtrl'
   });
 }])
 
-.controller('View2Ctrl', ['$scope', function($scope) {
-  $scope.data = 'something else entirely'
+.controller('BigCitiesCtrl', ['$scope', function($scope) {
+  $scope.data = 'populations'
 }]);

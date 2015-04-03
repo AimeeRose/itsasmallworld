@@ -75,5 +75,7 @@ function findCheapest(origin, destination) {
     originCityName = _.find(cityAirportData, function(c) { return c.airportCode == origin })['city name']
     destinationCityName = _.find(cityAirportData, function(c) { return c.airportCode == destination })['city name']
     $('.fare').html(originCityName + " to " + destinationCityName + ": " + fare)
+  }).fail(function(jqXHR, textStatus) {
+    $('.fare').html('Request failed: ' + textStatus)
   })
 }

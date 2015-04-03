@@ -4,7 +4,7 @@
 angular.module('myApp', [
   'ngRoute',
   'myApp.airTravel',
-  'myApp.view2',
+  'myApp.bigCities',
   'myApp.version'
 ]).
 config(['$routeProvider', function($routeProvider) {

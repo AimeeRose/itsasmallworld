@@ -16,6 +16,21 @@ function chartCities(rootScope) {
   var rowItemMargin = 10;
   var rowMargin = 50;
 
+  var createPopulationPoint = function(city, yheight) {
+    console.log(city)
+    console.log(yheight)
+    var populationGroup = svg.append('g').attr('id', city.UrbanArea + '-population')
+      .attr("transform", function(d) { return "translate(" + 0 + "," + yheight + ")"; })
+
+    var circle = populationGroup.selectAll('.circle')
+      .data([city]);
+    circle.enter().append('circle')
+      .attr("fill", "skyblue")
+      .attr("class", "point")
+      .attr("r", function(d) { return d.Population / 1000000})
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+  }
+
   var createPopulationDensityGrid = function(city, yheight) {
     // A mini grid for representing density
     var popDensityGrid = d3.layout.grid()
@@ -47,8 +62,8 @@ function chartCities(rootScope) {
 
     var yheight = 0;
 
-    var transform = [0,0]
     _.each(populationDensities, function(city) {
+      createPopulationPoint(city, yheight)
       createPopulationDensityGrid(city, yheight);
       yheight += rowHeight + rowMargin;
     })

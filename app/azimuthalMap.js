@@ -8,14 +8,14 @@ function azimuthalMap(rootScope) {
   rootScope.width = width
   rootScope.height = height
 
-  var projection = d3.geo.azimuthal()
-      .scale(scale_q)
-      .origin([-71.03,42.37])
-      .mode("orthographic");
+  var projection = d3.geo.azimuthalEqualArea()
+      .scale(scale_q);
+      // .origin([-71.03,42.37])
+      // .mode("orthographic");
   rootScope.projection = projection
 
-  var circle = d3.geo.greatCircle()
-      .origin(projection.origin());
+  var circle = d3.geo.greatArc();
+      //.origin(projection.origin());
   rootScope.circle = circle
 
   var scale = {
@@ -97,7 +97,7 @@ function azimuthalMap(rootScope) {
   }
 
   function clip(d) {
-    return path(circle.clip(d));
+    //return path(circle.clipExent(d));
   }
   rootScope.clip = clip
 
